@@ -1,2 +1,2 @@
 #!/bin/bash
-xdg-open https://www.imdb.com/title/tt0076759/
+telnet towel.blinkenlights.nl

@@ -1,0 +1,2 @@
+#!/bin/bash
+echo -e '\e]8;;imdb.com/title/tt0076759/\a\e]8;;\a'

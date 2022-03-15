@@ -9,6 +9,9 @@ if [ -e "$file_name" ]; then
    else
       echo "school file is empty"
    fi
+   if [ -f "$file_name" ]; then
+       echo "school is a regular file"
+   fi
 else
    echo "school file does not exist"
 fi

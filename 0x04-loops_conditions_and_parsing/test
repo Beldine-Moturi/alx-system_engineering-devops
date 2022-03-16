@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# test
+
+file_name="/etc/passwd"
+cut -d ':' -f1,3,6 "$file_name"

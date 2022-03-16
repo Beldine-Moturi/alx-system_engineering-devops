@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# reads the contents of the '/etc/passwd' file and formats the output
+
+FILE="/etc/passwd"
+
+while read -r line; do
+      IFS=":" read -r USERNAME PASSWORD USER_ID GROUP_ID NAME HOME SHELL

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Indefinitely writes text to a file
+# used to demonstrate managing of processes in linux
+
+while true; do
+      echo "I am Alive" >> /tmp/my_process
+      sleep 2
+done

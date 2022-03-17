@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# catches a signal and performs some actions based on it
+while true; do
+      trap "echo I am invincible!!!" SIGTERM
+      echo "To infinity and beyond"
+      sleep 2
+done

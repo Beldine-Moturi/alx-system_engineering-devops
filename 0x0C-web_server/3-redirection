@@ -1,29 +1,23 @@
 #!/usr/bin/env bash
-# redirects a web page on nginx server to another url
+# Script that installs Nginx server and redirects /redirect_me
+apt-get -y update
+apt-get -y install nginx
+sudo chown -R "$USER":"$USER" /var/www/html/index.nginx-debian.html
+sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/default
 
-sudo apt-get update
-sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-sudo chown -R "$USER":"$USER" /var/www/html/
-sudo chmod -R 755 /var/www
-sudo chown -R "$USER":"$USER" /etc/nginx/sites-available/
-sudo chmod -R 755 /etc/nginx/sites-available/
-
-echo "Hello World!" > /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
 
 redirection=\
 "server {
-	   listen 80 default_server;
-	   listen [::]:80 default_server;
-	   root /var/www/html;
-	   index index.html index.htm index.nginx-debian.html;
-	   server_name _;
-	   location /redirect_me {
-	   	    return 301 https://github.com/;
-	   }
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location /redirect_me {
+		return 301 https://github.com/;
+	}
 }"
 
 echo -e "$redirection" > /etc/nginx/sites-available/default
-
-#sed -i 's/server_name.*$/&\n\\trewrite ^/redirect_me https://github.com/Beldine-Moturi permanent;' /etc/nginx/sites-available/default
 service nginx start

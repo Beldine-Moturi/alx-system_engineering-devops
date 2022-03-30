@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# redirects a web page on nginx server to another url
+
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo chmod -R 755 /var/www
+echo "Hello World!" > /var/www/html/index.html
+sed -i 's/server_name.*$/&\n\\trewrite ^/redirect_me https://github.com/Beldine-Moturi permanent;' /etc/nginx/sites-available/default
+service nginx start

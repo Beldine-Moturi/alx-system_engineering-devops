@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#configure a custom 404 page
+
+sudo apt-get update
+sudo apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+chmod -R 755 /var/www
+echo 'Hello World' > /var/www/html/index.html
+
+argument=\
+"server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+               root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+        error_page 404 /custom404.html;
+        location  /custom404.html {
+            internal;
+        }
+        if (\$request_filename ~ redirect_me){
+            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+}
+"
+echo "Ceci n'est pas une page" > /var/www/html/custom404.html
+echo "$argument" > /etc/nginx/sites-available/default
+
+service nginx start

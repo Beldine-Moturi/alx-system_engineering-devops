@@ -2,24 +2,25 @@
 
 # update apt-get first
 exec { 'apt-get update':
-  command  => 'sudo apt-get update',
-  provider => 'shell',
+  command => 'sudo apt-get update',
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
 
 # install Nginx package
 package { 'install nginx':
-  ensure => 'present',
-  name   => 'nginx',
+  ensure => 'installed',
 }
 
 # adjust the firewall
 exec { 'allow HTTP':
   command => "sudo ufw allow 'Nginx HTTP'",
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
 
 # file permissions and ownership
 exec { 'change file permissions':
   command => 'sudo chmod -R 755 /var/www',
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
 
 # change index file
@@ -68,4 +69,10 @@ file { 'Nginx default config file':
 # restart nginx
 exec { 'restart nginx':
   command => 'sudo service nginx restart',
+}
+
+# start nginx
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }

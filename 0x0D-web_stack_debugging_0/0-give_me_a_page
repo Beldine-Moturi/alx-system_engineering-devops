@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # starts an Apache server
 echo "ServerName localhost" >> /etc/apache2.conf
+echo "apache2 is running" > /var/www/html/index.html
 service apache2 start

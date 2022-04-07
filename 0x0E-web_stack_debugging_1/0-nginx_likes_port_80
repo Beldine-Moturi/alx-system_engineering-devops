@@ -1,19 +1,7 @@
 #!/usr/bin/env bash
 # configures a nginx server to listen on port 80
 
-sudo apt-get update
+sudo apt update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP' 2> /dev/null
-SERVER_CONFIG=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.nginx-debian.html;
-	server_name _;
-	location / {
-		 try_files \$uri \$uri/ =404;
-	}
-}"
-bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-enabled/default"
+ufw allow 'Nginx HTTP' 2> /dev/null
 service nginx start

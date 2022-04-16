@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-#configure a custom 404 page
+#configure a nginx server
 
 sudo apt-get update
 sudo apt-get -y install nginx
 ufw allow 'Nginx HTTP'
-chmod -R 755 /var/www
+sudo chmod -R 755 /var/www
 echo 'Hello World' > /var/www/html/index.html
 
 argument=\
@@ -28,7 +28,7 @@ argument=\
 "
 echo "Ceci n'est pas une page" > /var/www/html/custom404.html
 echo "$argument" > /etc/nginx/sites-available/default
-chmod -R 755 /etc/nginx/nginx.conf
+sudo chmod -R 755 /etc/nginx/nginx.conf
 sed -i "s/server\(.*\)/&\n\tadd_header X-Served-By hostname;" /etc/nginx/nginx.conf
 
-service nginx start
+sudo service nginx start

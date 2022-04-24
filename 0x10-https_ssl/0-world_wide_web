@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# displays information about sub domains of my domain zone
+
+domain="$1"
+subdomain="$2"
+
+subdomains=( "www" "lb-01" "web-01" "web-02" )
+
+function rundig() {
+    domain="$1"
+    subdomain="$2"
+
+    dig "$subdomain.$domain" | awk -v s="$subdomain" '/ANSWER SECTION/{getline;print "The subdomain " s " is a " $4 " record and points to " $5}'
+}
+
+if [ "$#" -eq 1 ]; then
+    for n in "${subdomains[@]}"
+    do
+	rundig "$domain" "$n"
+    done
+elif [ "$#" -eq 2 ]; then
+    rundig "$domain" "$subdomain"
+fi

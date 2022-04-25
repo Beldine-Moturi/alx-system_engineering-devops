@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# install and set ufw rules on server
+sudo apt-get install ufw
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tccp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw enable -y
+sudo ufw status verbose

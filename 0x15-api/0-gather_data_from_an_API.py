@@ -15,7 +15,7 @@ if __name__ == "__main__":
     completed = list(filter(lambda x: x.get('completed'), tasks))
 
     print(
-        "Employee {} is done with tasks {}/{}:".format(
+        "Employee {} is done with tasks({}/{}):".format(
             user.get('name'),
             len(completed),
             len(tasks)

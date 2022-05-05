@@ -1,36 +1,32 @@
 #!/usr/bin/python3
-""" script for api to employee todos info and export into csv format """
+"""
+uses a REST API and for a given employee ID, returns information
+about his/her TODO list progress.
+"""
+
 
 if __name__ == "__main__":
     import csv
     import requests
-    from sys import argv
+    import sys
 
-    if len(argv) != 2:
-        print("Usage: ./1-export_to_CSV.py <employee id>")
-        exit()
-    response = requests.get(
-                     "https://jsonplaceholder.typicode.com/users/{}"
-                     .format(argv[1])
-                    ).json()
-    if not response:
-        exit()
-    else:
-        username = response.get('username')
-    total = requests.get(
-                     "https://jsonplaceholder.typicode.com/todos?userId={}"
-                     .format(argv[1])
-                    ).json()
-    with open('{}.csv'.format(argv[1]), 'w') as f:
+    API = 'https://jsonplaceholder.typicode.com'
+    """REST API url"""
+
+    id = sys.argv[1]
+    user = requests.get('{}/users/{}'.format(API, id)).json()
+    tasks = requests.get('{}/users/{}/todos'.format(API, id)).json()
+
+    with open(f'{id}.csv', 'w', newline='') as f:
         writer = csv.DictWriter(
             f,
             fieldnames=["userId", "username", "completed", "title"],
             quoting=csv.QUOTE_ALL
         )
-        for d in total:
+        for task in tasks:
             writer.writerow({
-                "userId": argv[1],
-                "username": username,
-                "completed": d.get('completed'),
-                "title": d.get('title')
+                "userId": id,
+                "username": user.get('name'),
+                "completed": task.get('completed'),
+                "title": task.get('title')
             })

@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Defines function to query first 10 hot posts for a subreddit
-"""
+"""Defines function to query first 10 hot posts for a subreddit"""
 import requests
 
 

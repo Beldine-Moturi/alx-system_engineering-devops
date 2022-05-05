@@ -10,18 +10,13 @@ def number_of_subscribers(subreddit):
     try:
         timeframe = 'all'
         limit = ''
-        base_url = f'https://www.reddit.com/r/{subreddit}/about.json?t={timeframe}'
+        base_url = f'https://www.reddit.com/r/{subreddit}/about.json?\
+t={timeframe}'
         request = requests.get(
             base_url,
             headers={'User-agent': 'MyBot'},
             allow_redirects=False
         )
-    except Exception as e:
-        print("An error occured!:")
-        print(e)
+    if 'error' in request.json().keys():
+        return 0
     return request.json()['data']['subscribers']
-
-if len(sys.argv) < 2:
-    print("Please pass an argument for the subreddit to search.")
-else:
-    print("{:d}".format(number_of_subscribers(sys.argv[1])))

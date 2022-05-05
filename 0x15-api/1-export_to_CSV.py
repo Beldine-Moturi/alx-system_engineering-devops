@@ -11,6 +11,8 @@ if __name__ == "__main__":
     import sys
 
     API = 'https://jsonplaceholder.typicode.com'
+    """REST API url"""
+
     id = sys.argv[1]
     user = requests.get('{}/users/{}'.format(API, id)).json()
     tasks = requests.get('{}/users/{}/todos'.format(API, id)).json()
